@@ -1,0 +1,107 @@
+#!/bin/csh
+
+
+
+set dir_path = "/depa/app01/bscsprod/work/BIH/SCRIPTS"
+
+set zip_file_dir_name = "/depa/app01/bscsprod/work/BIH/ZIP_MAILS_FROM_BEERI"
+
+set numzipfiles = `ls $zip_file_dir_name/*_sign.zip|wc -l`
+
+set output_pdf_dir = $1
+
+
+set zipi = 0
+set zipj = 0
+set zipk = 0 
+set zipt = 0 
+
+set zipp = 0 
+set zipq = 0
+set zipw = 0
+set zipr = 0
+
+cd ${dir_path} 
+rm zipnames.txt
+touch zipnames.txt
+ls -1 ${zip_file_dir_name}/*_sign.zip > zipnames.txt 
+echo 'endfile' >> zipnames.txt
+
+
+while ( ${zipi} <= ${numzipfiles} ) 
+   if ( ${zipi} == ${numzipfiles} ) then 
+      break
+   else
+     set zipi = `expr ${zipr} + 1` 
+        echo $zipi
+     set zipj = `expr ${zipi} + 1`
+        echo $zipj 
+     set zipk = `expr ${zipj} + 1`
+        echo $zipk
+     set zipt = `expr ${zipk} + 1`
+        echo $zipt
+     set zipp = `expr ${zipt} + 1`
+        echo $zipp
+     set zipq = `expr ${zipp} + 1`
+        echo $zipq
+     set zipw = `expr ${zipq} + 1`
+        echo $zipw
+     set zipr = `expr ${zipw} + 1`
+        echo $zipr
+
+     set filezip1 = `head -${zipi} zipnames.txt | tail -1` 
+     set filezip2 = `head -${zipj} zipnames.txt | tail -1`
+     set filezip3 = `head -${zipk} zipnames.txt | tail -1`
+     set filezip4 = `head -${zipt} zipnames.txt | tail -1`
+     set filezip5 = `head -${zipp} zipnames.txt | tail -1`
+     set filezip6 = `head -${zipq} zipnames.txt | tail -1`
+     set filezip7 = `head -${zipw} zipnames.txt | tail -1`
+     set filezip8 = `head -${zipr} zipnames.txt | tail -1`
+
+
+     echo $filezip1 $filezip2 $filezip3 $filezip4 $filezip5 $filezip6 $filezip7 $filezip8
+
+     if ( ${filezip1} != 'endfile' ) then
+        nohup unzip -joLq $filezip1 -d ${output_pdf_dir} &
+     endif
+
+     if ( ${filezip2} != 'endfile' ) then 
+        nohup unzip -joLq $filezip2 -d ${output_pdf_dir} &
+     endif 
+
+     if ( ${filezip3} != 'endfile' ) then
+        nohup unzip -joLq $filezip3 -d ${output_pdf_dir} &
+     endif
+
+     if ( ${filezip4} != 'endfile' ) then
+        nohup unzip -joLq $filezip4 -d ${output_pdf_dir} &
+     endif
+
+
+     if ( ${filezip5} != 'endfile' ) then
+         nohup unzip -joLq $filezip5 -d ${output_pdf_dir} &
+     endif
+
+     if ( ${filezip6} != 'endfile' ) then
+         nohup unzip -joLq $filezip6 -d ${output_pdf_dir} &
+     endif
+
+     if ( ${filezip7} != 'endfile' ) then
+         nohup unzip -joLq $filezip7 -d ${output_pdf_dir} &
+     endif
+
+     if ( ${filezip8} != 'endfile' ) then
+         nohup unzip -joLq $filezip8 -d ${output_pdf_dir} &
+     endif
+
+     wait 
+     echo 'Finish to unzip 8 files' >> lior
+     date >> lior 
+
+    endif
+
+end
+
+echo 'Success'
+echo 'Success' >> lior
+rm -rf zipnames.txt
